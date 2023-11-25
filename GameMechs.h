@@ -21,6 +21,8 @@ class GameMechs
     private:
         char input;
         bool exitFlag;
+        bool loseFlag; //implement later when making snake
+        int score; //implement as you eat apples or whatever
         
         int boardSizeX;
         int boardSizeY;
@@ -28,9 +30,16 @@ class GameMechs
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
+        //destructor if needed
         
         bool getExitFlagStatus();
         void setExitTrue();
+
+        bool getLoseFlagStatus();
+        void setLoseFlag();
+
+        int getScore();
+        void incrementScore();
 
         char getInput();
         void setInput(char this_input);
