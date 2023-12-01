@@ -15,7 +15,7 @@ objPosArrayList::~objPosArrayList()
 
 int objPosArrayList::getSize()
 {
-
+    
 }
 
 void objPosArrayList::insertHead(objPos thisPos)

@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "GameMechs.h"
 #include "Player.h"
+#include "Food.h"
 
 using namespace std;
 
@@ -10,6 +11,7 @@ using namespace std;
 
 GameMechs* myGM; //create global regerence to game mechanics class
 Player* myPlayer; //create global reference to player class
+Food* snakeFood;  // Creates a global reference to the Food class, referred to as snakeFood
 
 void Initialize(void);
 void GetInput(void);
@@ -46,6 +48,10 @@ void Initialize(void)
     //set up board and player
     myGM = new GameMechs(30, 15);
     myPlayer = new Player(myGM);
+
+    // Setting up food
+    snakeFood = new Food;     // Allocating the Food object to the heap
+    // snakeFood->generateFood( Whatever the player's position is );
 
 }
 
@@ -117,6 +123,8 @@ void CleanUp(void)
 
     delete myGM;
     delete myPlayer; //for now... 
+
+    delete snakeFood;  // Deallocating the Food object from the heap
   
     MacUILib_uninit();
 }

@@ -76,19 +76,19 @@ void Player::movePlayer()
     // PPA3 Finite State Machine logic
     if(myDir == RIGHT)
     {
-        playerPos.x += 1;
+        playerPos.x += 1;       // Right increments positively
     }
     else if (myDir == LEFT)
     {
-        playerPos.x -= 1;
+        playerPos.x -= 1;       // Left increments negatively
     }
     else if (myDir == DOWN)
     {
-        playerPos.y += 1;
+        playerPos.y += 1;       // Down increments positively
     }
     else if (myDir == UP)
     {
-        playerPos.y -= 1;
+        playerPos.y -= 1;       // Up increments negatively
     }
 
     //border wrap around
