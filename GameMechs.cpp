@@ -32,8 +32,13 @@ bool GameMechs::getExitFlagStatus()
 
 char GameMechs::getInput()
 {
-    if (MacUILib_hasChar()){
+    if (MacUILib_hasChar())
+    {
         input = MacUILib_getChar();
+    }
+    if (input == '`')
+    {
+        exitFlag = true;
     }
 
     return input;
