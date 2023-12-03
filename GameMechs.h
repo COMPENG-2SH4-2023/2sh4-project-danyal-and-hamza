@@ -51,6 +51,7 @@ class GameMechs
         int getBoardSizeY();
 
         void printFinalMessage(); //just to print the messages at end of game
+        void printInstructions();
       
 
 };

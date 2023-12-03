@@ -43,18 +43,21 @@ void Player::updatePlayerDir()
     switch(input) 
     {
         case 'w':
+        case 'W':
                 if (myDir != DOWN){
                     myDir = UP;
                 }
                 break;
             // Add more key processing here
             case 's':
+            case 'S':
                 if (myDir != UP){
                     myDir = DOWN;
                 }
                 break;
             // Add more key processing here   
             case 'a':
+            case 'A':
                 if (myDir != RIGHT){
                     myDir = LEFT;
                 }
@@ -62,6 +65,7 @@ void Player::updatePlayerDir()
                 
 
             case 'd':
+            case 'D':
                 if (myDir != LEFT){
                     myDir = RIGHT;
                 }

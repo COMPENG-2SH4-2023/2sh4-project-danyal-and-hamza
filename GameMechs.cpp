@@ -105,3 +105,9 @@ void GameMechs::printFinalMessage()
     }
     
 }
+
+void GameMechs::printInstructions()
+{
+    MacUILib_printf("Use WASD to control the movement of the player\n");
+    MacUILib_printf("Pick up the food around the screen to gain score \n");
+}

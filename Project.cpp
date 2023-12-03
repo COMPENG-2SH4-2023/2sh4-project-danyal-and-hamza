@@ -129,15 +129,9 @@ void DrawScreen(void)
         MacUILib_printf("\n");
         
     }
-
+    myGM->printInstructions();
     MacUILib_printf("Player score: %d", myGM->getScore());
 
-    MacUILib_printf("\n");
-    if(myGM->getLoseFlagStatus())
-    {
-        MacUILib_printf("YOUVE LOST THE GAME");
-        myGM->setExitTrue();
-    }
     
 
 }
