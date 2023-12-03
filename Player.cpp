@@ -1,15 +1,20 @@
 #include "Player.h"
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef, Food* thisFood)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP; // initial state of stop
 
-    // more actions to be included
-    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, 
-                        mainGameMechsRef->getBoardSizeY()/2, '@'); // sets character initilization
+    myFood = thisFood; //setting up the food reference
 
+    // more actions to be included
+    objPos tempPos;
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, 
+                      mainGameMechsRef->getBoardSizeY()/2, 1); // sets character initilization
+
+    playerPosList = new objPosArrayList();
+    playerPosList->insertHead(tempPos);
 
 }
 
@@ -18,15 +23,14 @@ Player::~Player()
 {
     // delete any heap members here
     // empty for now, need in iteration 3
-
+    delete playerPosList;
 
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+objPosArrayList* Player::getPlayerPos()
 {
-    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
-    
-    // return the reference to the playerPos arrray list ... later
+       // return the reference to the playerPos arrray list ... later
+       return playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -66,49 +70,96 @@ void Player::updatePlayerDir()
 
     }
 
-    mainGameMechsRef->clearInput(); //clear input char right after changing states
+}
 
+bool Player::checkFoodConsumption(objPos snakeHead, objPos foodPos)
+{
+    return foodPos.isPosEqual(&snakeHead);
+}
 
+void Player::increasePlayerLength(objPos snakeHead)
+{
+    playerPosList->insertHead(snakeHead);
+    myFood->generateFood(playerPosList);
+    mainGameMechsRef->incrementScore(playerPosList);
+}
+
+bool Player::checkSelfCollision(objPos snakeHead)
+{
+    objPos tempPos;
+
+    for(int i = 1; i < playerPosList->getSize(); i++)
+    {
+        playerPosList->getElement(tempPos, i);
+        if(snakeHead.isPosEqual(&tempPos))
+        {
+            return true; //if theres a collision, return true
+        }
+    }
+    return false; //if theres not a collision, return false
 }
 
 void Player::movePlayer()
 {
+    objPos currentHead; //holds pos of current head
+    playerPosList->getHeadElement(currentHead);
+
+    //stores the position of the food into foodPos
+    objPos foodPos;
+    myFood->getFoodPos(foodPos);
+
     // PPA3 Finite State Machine logic
     if(myDir == RIGHT)
     {
-        playerPos.x += 1;       // Right increments positively
+        currentHead.x += 1;
     }
     else if (myDir == LEFT)
     {
-        playerPos.x -= 1;       // Left increments negatively
+        currentHead.x -= 1;
     }
     else if (myDir == DOWN)
     {
-        playerPos.y += 1;       // Down increments positively
+        currentHead.y += 1;
     }
     else if (myDir == UP)
     {
-        playerPos.y -= 1;       // Up increments negatively
+        currentHead.y -= 1;
     }
 
     //border wrap around
-    if (playerPos.x == mainGameMechsRef->getBoardSizeX() - 1)
+    if (currentHead.x == mainGameMechsRef->getBoardSizeX() - 1)
     {
-        playerPos.x = 1;
+        currentHead.x = 1;
     }
-    if (playerPos.y == mainGameMechsRef->getBoardSizeY() - 1)
+    if (currentHead.y == mainGameMechsRef->getBoardSizeY() - 1)
     {
-        playerPos.y = 1;
+        currentHead.y = 1;
     }
-    if (playerPos.x == 0)
+    if (currentHead.x == 0)
     {
-        playerPos.x = mainGameMechsRef->getBoardSizeX() - 1;
+        currentHead.x = mainGameMechsRef->getBoardSizeX() - 2;
     }
-    if (playerPos.y == 0)
+    if (currentHead.y == 0)
     {
-        playerPos.y = mainGameMechsRef->getBoardSizeY() - 1;
+        currentHead.y = mainGameMechsRef->getBoardSizeY() - 2;
     }
     
     //updates player posistion based on logic.
-}
 
+    //new current head should inserted to head of list
+    //remove tail from list
+    if(checkFoodConsumption(currentHead, foodPos))
+    {
+       increasePlayerLength(currentHead);
+    }
+    else
+    {
+        playerPosList->insertHead(currentHead);
+        playerPosList->removeTail();
+    }
+    if(checkSelfCollision(currentHead))
+    {
+        mainGameMechsRef->setLoseFlag();
+        mainGameMechsRef->setExitTrue();
+    }
+}

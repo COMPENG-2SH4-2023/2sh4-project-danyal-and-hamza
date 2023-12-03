@@ -7,6 +7,8 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 
+#include "MacUILib.h"
+
 using namespace std;
 
 
@@ -39,7 +41,7 @@ class GameMechs
         void setLoseFlag();
 
         int getScore();
-        void incrementScore();
+        void incrementScore(objPosArrayList* thisPlayerList);
 
         char getInput();
         void setInput(char this_input);
@@ -47,6 +49,8 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();
+
+        void printFinalMessage(); //just to print the messages at end of game
       
 
 };

@@ -1,5 +1,6 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
+#include "Food.h"
 
 GameMechs::GameMechs()
 {
@@ -39,7 +40,7 @@ char GameMechs::getInput()
     if (input == '`')
     {
         exitFlag = true;
-    }
+    } 
 
     return input;
 }
@@ -76,9 +77,9 @@ int GameMechs::getScore()
     return score;
 }
 
-void GameMechs::incrementScore()
+void GameMechs::incrementScore(objPosArrayList* thisPlayerList)
 {
-    //cant really do without the food thingy so leave for now...
+    score = thisPlayerList->getSize() - 1;
 }
 
 bool GameMechs::getLoseFlagStatus()
@@ -89,4 +90,18 @@ bool GameMechs::getLoseFlagStatus()
 void GameMechs::setLoseFlag()
 {
     loseFlag = true;
+}
+
+void GameMechs::printFinalMessage()
+{
+    if(!loseFlag && exitFlag)
+    {
+        MacUILib_printf("You have ended the game! Game Over!");
+    }
+    else if (loseFlag == true)
+    {
+        MacUILib_printf("You've lost the game. Game over!");
+        exitFlag = true;
+    }
+    
 }
