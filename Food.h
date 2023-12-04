@@ -14,23 +14,36 @@ using namespace std;
 class Food
 {
     private:
-        objPos foodPos;   // Food position of the objPos type
+        // Food position of the objPos type
+        objPos foodPos;
+
+        //reference to GameMechs class
         GameMechs* thisGM;
+
+        //creating a pointer to foodBucket that is of objPosArrayList type
         objPosArrayList* foodBucket;
+
+        //creating a bool to represent if a position is taken wihtin the objPosArrayLists for random position generation 
         bool posTaken;
-        objPos tempPos; //temp pos to take position of elements in player array
-        objPos tempFoodPos; //temporary positions of food elements in food bucket
+
+        //temp pos to take position of elements in player array
+        objPos tempPos;
+
+        //temporary positions of food elements in food bucket
+        objPos tempFoodPos;
     public:
-        
-        Food(GameMechs* thisGMRef); //initilizse food with reference to GM to use border
+        //constructor and deconstructor
+        //initilizse food with reference to GM to use border
+        Food(GameMechs* thisGMRef);
+
+        //destructor
         ~Food();
+
+        //generate the food while blocking off the player position and the rest of the player body for the snake head
         void generateFood(objPosArrayList* blockOff); //update this for the playerList
-        //need to accept player body array list
-        //go through each element in the array to make sure nothing overlaps
-        
-
-
-        objPosArrayList* getFoodPos(); //get the list of food elements and their positions
+    
+        //get the list of food elements and their positions
+        objPosArrayList* getFoodPos();
 };
 
 #endif

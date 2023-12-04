@@ -6,9 +6,14 @@
 objPosArrayList::objPosArrayList()
 {
     //constructor
-    aList = new  objPos[ARRAY_MAX_CAP]; //256 elements on the heap
-    listSize = 0; //nothing in list at start
-    arrayCapacity = ARRAY_MAX_CAP;// how many elements can be in the list
+    //30x15 elements on the heap
+    aList = new  objPos[ARRAY_MAX_CAP];
+
+    //nothing in list at start, so list size is 0
+    listSize = 0;
+
+    // how many elements can be in the list
+    arrayCapacity = ARRAY_MAX_CAP;
 }
 
 objPosArrayList::~objPosArrayList()
@@ -19,58 +24,79 @@ objPosArrayList::~objPosArrayList()
 
 int objPosArrayList::getSize()
 {
+    //return the size of the LIST
     return listSize;
 }
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    // move all elements one space to make space at front
+    //move all elements one space to make space at front
     //shouldnt do anything if array is at max capacity
     if (listSize == arrayCapacity)
     {
-        
+        return;
     }
     for(int i = listSize; i > 0; i--)
     {
-        aList[i].setObjPos(aList[i-1]); //this shuffles the elements towards the tail
+        //this shuffles the elements towards the tail
+        aList[i].setObjPos(aList[i-1]);
     }
 
+    //set the head to an thisPos object
     aList[0].setObjPos(thisPos);
+
+    //increase the list size
     listSize++;
 }   
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
+    //insert thisPos object to the tail of the list if array isnt at max capacity
+    if (listSize == arrayCapacity)
+    {
+        return;
+    }
     aList[listSize].setObjPos(thisPos);
+
+    //increase the size of the list
     listSize++;
 }
 
 void objPosArrayList::removeHead()
 {
+    //shuffle all obects in list to the left, overwriting the head element
     for(int i = 0; i < listSize - 1; i++)
     {
-        aList[i].setObjPos(aList[i+1]); //overwrite first element???
+        aList[i].setObjPos(aList[i+1]);
     }
+
+    //decrease the list size
     listSize--;
 }
 
 void objPosArrayList::removeTail()
 {
-    aList[listSize].setObjPos(0, 0, ' '); //empty string
+    //remove the tail element and replace it with an empty string
+    aList[listSize].setObjPos(0, 0, ' ');
+
+    //decrease list size
     listSize--;
 }
 
 void objPosArrayList::getHeadElement(objPos &returnPos)
 {
-    returnPos.setObjPos(aList[0]); // return head
+    //return the head element of the list as an object
+    returnPos.setObjPos(aList[0]);
 }
 
 void objPosArrayList::getTailElement(objPos &returnPos)
 {
-    returnPos.setObjPos(aList[listSize - 1]); // return tail
+    //return the tail element of the list as an object
+    returnPos.setObjPos(aList[listSize - 1]);
 }
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
+    //return the element in list at index as an object.
     returnPos.setObjPos(aList[index]);
 }

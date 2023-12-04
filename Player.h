@@ -16,8 +16,12 @@ class Player
         ~Player();
 
         objPosArrayList* getPlayerPos();
+
+        //functions that deal with the movement of the player
         void updatePlayerDir();
         void movePlayer();
+        
+        //functions that deal with how the player reacts to collisions
         bool checkFoodConsumption(objPos snakeHead, objPosArrayList* foodBucket);
         void increasePlayerLength(objPos snakeHead);
         bool checkSelfCollision(objPos snakeHead);
@@ -26,9 +30,12 @@ class Player
     private:
         objPosArrayList* playerPosList;   // Upgrade this in iteration 3.       
         enum Dir myDir;
+
+        // Need a reference to the Main Game Mechanisms and food classes
         Food* myFood;
-        // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
+
+        //bool to check if a special food is consumed
         bool specialFoodConsumed;
 
 };
