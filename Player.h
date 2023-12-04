@@ -18,7 +18,7 @@ class Player
         objPosArrayList* getPlayerPos();
         void updatePlayerDir();
         void movePlayer();
-        bool checkFoodConsumption(objPos snakeHead, objPos foodPos);
+        bool checkFoodConsumption(objPos snakeHead, objPosArrayList* foodBucket);
         void increasePlayerLength(objPos snakeHead);
         bool checkSelfCollision(objPos snakeHead);
 
@@ -29,6 +29,7 @@ class Player
         Food* myFood;
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
+        bool specialFoodConsumed;
 
 };
 

@@ -58,10 +58,7 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    if (myGM->getInput() == 'k')
-    {
-        myFood->generateFood(myPlayer->getPlayerPos());
-    }
+    myGM->getInput();
 }
 
 void RunLogic(void)
@@ -78,19 +75,11 @@ void DrawScreen(void)
     MacUILib_clearScreen();
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
     objPos tempBody;
-    
-    objPos tempFoodPos;
-    myFood->getFoodPos(tempFoodPos);
+
+    objPosArrayList* foodBucket = myFood->getFoodPos();
+    objPos tempFoodList;
 
     bool drawn;
-    
-
-    //check function works
-    // MacUILib_printf("board size is %dx%d, playerpos is: <%d, %d>, + %c, score is: %d\n"
-    //                 , myGM->getBoardSizeX(), 
-    //                 myGM->getBoardSizeY(), 
-    //                 tempBody.x, tempBody.y, tempBody.symbol
-    //                 , myGM->getScore());
     
     for (int i = 0; i < myGM->getBoardSizeY(); i++)//i is for the # of rows or the y values
     {
@@ -107,18 +96,33 @@ void DrawScreen(void)
                     drawn = true;
                     break;
                 }
+
             }
             if(drawn) //if player body is drawn, go to next iteration
             {
                 continue;
             }
+
+            for(int k = 0; k < foodBucket->getSize(); k++)
+            {
+                foodBucket->getElement(tempFoodList, k);
+                if(tempFoodList.x == j && tempFoodList.y == i)
+                {
+                    MacUILib_printf("%c", tempFoodList.symbol);
+                    drawn = true;
+                    break;
+                }
+
+            }
+
+            if(drawn) //if player body is drawn, go to next iteration
+            {
+                continue;
+            }
+
             if (i == 0 || i == myGM->getBoardSizeY() - 1 || j == 0 || j == myGM->getBoardSizeX() - 1)
             {
                 MacUILib_printf("#");
-            }
-            else if(j == tempFoodPos.x && i == tempFoodPos.y)
-            {
-                MacUILib_printf("%c", tempFoodPos.symbol);
             }
             else
             {
@@ -130,9 +134,7 @@ void DrawScreen(void)
         
     }
     myGM->printInstructions();
-    MacUILib_printf("Player score: %d", myGM->getScore());
-
-    
+    MacUILib_printf("Player score: %d\n", myGM->getScore());
 
 }
 

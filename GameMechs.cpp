@@ -79,7 +79,7 @@ int GameMechs::getScore()
 
 void GameMechs::incrementScore(objPosArrayList* thisPlayerList)
 {
-    score = thisPlayerList->getSize() - 1;
+    score++;
 }
 
 bool GameMechs::getLoseFlagStatus()
@@ -110,4 +110,5 @@ void GameMechs::printInstructions()
 {
     MacUILib_printf("Use WASD to control the movement of the player\n");
     MacUILib_printf("Pick up the food around the screen to gain score \n");
+    MacUILib_printf("Occasionally, an X may spawn in, collect the X to get 5 points\n");
 }

@@ -76,13 +76,35 @@ void Player::updatePlayerDir()
 
 }
 
-bool Player::checkFoodConsumption(objPos snakeHead, objPos foodPos)
+bool Player::checkFoodConsumption(objPos snakeHead, objPosArrayList* foodBucket)
 {
-    return foodPos.isPosEqual(&snakeHead);
+    objPos tempFoodPos;
+    for(int i = 0; i < foodBucket->getSize(); i++)
+    {
+        foodBucket->getElement(tempFoodPos, i);
+        if (tempFoodPos.isPosEqual(&snakeHead) && tempFoodPos.symbol == 'X')
+        {
+            specialFoodConsumed = true;
+            return true;
+        }
+        else if (tempFoodPos.isPosEqual(&snakeHead))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Player::increasePlayerLength(objPos snakeHead)
 {
+    if (specialFoodConsumed)
+    {
+        mainGameMechsRef->incrementScore(playerPosList);
+        mainGameMechsRef->incrementScore(playerPosList);
+        mainGameMechsRef->incrementScore(playerPosList);
+        mainGameMechsRef->incrementScore(playerPosList);
+        specialFoodConsumed = false;
+    }
     playerPosList->insertHead(snakeHead);
     myFood->generateFood(playerPosList);
     mainGameMechsRef->incrementScore(playerPosList);
@@ -109,8 +131,9 @@ void Player::movePlayer()
     playerPosList->getHeadElement(currentHead);
 
     //stores the position of the food into foodPos
-    objPos foodPos;
-    myFood->getFoodPos(foodPos);
+    objPosArrayList* foodBucket = myFood->getFoodPos();
+
+    
 
     // PPA3 Finite State Machine logic
     if(myDir == RIGHT)
@@ -152,7 +175,7 @@ void Player::movePlayer()
 
     //new current head should inserted to head of list
     //remove tail from list
-    if(checkFoodConsumption(currentHead, foodPos))
+    if(checkFoodConsumption(currentHead, foodBucket))
     {
        increasePlayerLength(currentHead);
     }

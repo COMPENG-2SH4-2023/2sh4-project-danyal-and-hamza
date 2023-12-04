@@ -6,6 +6,7 @@
 
 #include "objPos.h"
 #include "GameMechs.h"
+#include "objPosArrayList.h"
 
 using namespace std;
 
@@ -15,8 +16,10 @@ class Food
     private:
         objPos foodPos;   // Food position of the objPos type
         GameMechs* thisGM;
+        objPosArrayList* foodBucket;
         bool posTaken;
         objPos tempPos; //temp pos to take position of elements in player array
+        objPos tempFoodPos; //temporary positions of food elements in food bucket
     public:
         
         Food(GameMechs* thisGMRef); //initilizse food with reference to GM to use border
@@ -27,7 +30,7 @@ class Food
         
 
 
-        void getFoodPos(objPos &returnPos);
+        objPosArrayList* getFoodPos(); //get the list of food elements and their positions
 };
 
 #endif
