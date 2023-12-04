@@ -110,12 +110,14 @@ void GameMechs::printFinalMessage()
     if(!loseFlag && exitFlag)
     {
         //if youve lost the game...
-        MacUILib_printf("You have ended the game! Game Over!");
+        MacUILib_printf("You have ended the game! Game Over!\n");
+        MacUILib_printf("Your score was: %d", score);
     }
     else if (loseFlag == true)
     {
         //if you exit the game...
-        MacUILib_printf("You've lost the game. Game over!");
+        MacUILib_printf("You've lost the game. Game over!\n");
+        MacUILib_printf("Your score was: %d", score);
     }
     
 }
